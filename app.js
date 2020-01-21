@@ -1,6 +1,8 @@
 const express = require("express");
 const mongoose = require('mongoose');
-
+const users = require("./routes/api/users");
+const tweets = require("./routes/api/tweets");
+const bodyParser = require('body-parser');
 
 
 const app = express();
@@ -11,8 +13,12 @@ mongoose
   .catch(err => console.log(err));
   
 
-
 app.get("/", (req, res) => res.send("Hello World!"));
+app.use("/api/users", users);
+app.use("/api/tweets", tweets);
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 const port = process.env.PORT || 5000;
 
